@@ -2,7 +2,6 @@
     "name": "munna/dot-env-editor",
     "description": "Simple package for laravel .env file modification. Now you can handle your .env variable easily.",
     "type": "package",
-    "version": "1.0.0",
     "license": "MIT",
     "authors": [{
         "name": "Munna",
