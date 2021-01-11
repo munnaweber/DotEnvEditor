@@ -1,3 +1,9 @@
+<a href="https://github.com/MunnaAhmed/DotEnvEditor/issues"><img src="https://img.shields.io/github/issues/MunnaAhmed/DotEnvEditor"><a/>
+<a href="https://github.com/MunnaAhmed/DotEnvEditor/network/members"><img src="https://img.shields.io/github/forks/MunnaAhmed/DotEnvEditor"><a/>
+<a href="https://github.com/MunnaAhmed/DotEnvEditor/stargazers"><img src="https://img.shields.io/github/stars/MunnaAhmed/DotEnvEditor"><a/>
+<a href="https://packagist.org/packages/munna/dot-env-editor"><img src="https://img.shields.io/github/license/MunnaAhmed/DotEnvEditor"><a/>
+
+
 # Dot Env Editor
 Laravel .env File Moderator
 
@@ -115,4 +121,8 @@ use DotEnvEditor;
 $env_row_file = DotEnvEditor::env_row_file();
 ```
 
+## License
+This package is open-sources and licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
 Thank you very much. Please give a star.
+
