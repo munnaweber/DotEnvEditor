@@ -1,6 +1,7 @@
 <?php 
 
 namespace Munna\DotEnvEditor;
+use Munna\DotEnvEditor\Exceptions\DotEnvEditorException;
 
 class DotEnvEditor{
     public $path;
@@ -9,11 +10,36 @@ class DotEnvEditor{
         $this->path = base_path('.env');
     }
 
+    public function update_multiple_key($array){
+        if(gettype($array) != "array"){
+            throw new DotEnvEditorException('Invalid array suppiled. Please make sure you are suppilying an array.');
+        }
+        foreach($array as $key => $val){
+            if($this->env_key_check($key) == false){
+                throw new DotEnvEditorException('This '.$key.' key is not exits');
+            }
+        }
+        $file = file($this->path);
+        $newdata = array_map(function($item) use ($array){
+            foreach($array as $key => $value){
+                $key = $key."=";
+                $find = stristr($item, $key);
+                if($find){
+                    return $key.$value."\n";
+                }
+            }
+            return $item;
+        }, $file);
+        $update_data = implode('', $newdata);
+        file_put_contents($this->path, $update_data);
+        return ['status' => true, 'message' => "The env variable has been updated"];
+    }
+
     public function update_key($setkey, $value){
         if($setkey == null){
-            return ["status" => false, "message" => "Set $setkey Key Data Properly"];
+            throw new DotEnvEditorException("Set $setkey Key Data Properly");
         }elseif($this->env_key_check($setkey) == false){
-            return ["status" => false, "message" => "This $setkey is not found"];
+            throw new DotEnvEditorException("This $setkey is not found");
         }
         $file = file($this->path);
         $key = $setkey."=";
@@ -31,13 +57,13 @@ class DotEnvEditor{
 
     public function add_key_before($newKey, $value, $before_key){
         if($newKey == null){
-            return ["status" => false, "message" => "Set New Key Data Properly"];
+            throw new DotEnvEditorException("Set New Key Data Properly");
         }elseif($this->env_key_check($newKey) == true){
-            return ["status" => false, "message" => "This $newKey New Key Is Already Exists"];
+            throw new DotEnvEditorException("This $newKey New Key Is Already Exists");
         }elseif($before_key == null){
-            return ["status" => false, "message" => "Set Before Key Data Properly"];
+            throw new DotEnvEditorException("Set Before Key Data Properly");
         }elseif($this->env_key_check($before_key) == false){
-            return ["status" => false, "message" => "This $before_key Before Key is Not Found"];
+            throw new DotEnvEditorException("This $before_key Before Key is Not Found");
         }
         $file = file($this->path);
         $before_key_value = $this->env_key($before_key);
@@ -57,13 +83,13 @@ class DotEnvEditor{
     
     public function add_key_after($newKey, $value, $after_key){
         if($newKey == null){
-            return ["status" => false, "message" => "Set $newKey New Key Data Properly"];
+            throw new DotEnvEditorException("Set $newKey New Key Data Properly");
         }elseif($after_key == null){
-            return ["status" => false, "message" => "Set $after_key After Key Data Properly"];
+            throw new DotEnvEditorException("Set $after_key After Key Data Properly");
         }elseif($this->env_key_check($newKey) == true){
-            return ["status" => false, "message" => "This $newKey New Key Is Already Exists"];
+            throw new DotEnvEditorException("This $newKey New Key Is Already Exists");
         }elseif($this->env_key_check($after_key) == false){
-            return ["status" => false, "message" => "This $after_key After Key Not Found"];
+            throw new DotEnvEditorException("This $after_key After Key Not Found");
         }
         $file = file($this->path);
         $after_key_value = $this->env_key($after_key);
@@ -82,9 +108,9 @@ class DotEnvEditor{
     
     public function add_key($key, $value){
         if($key == null){
-            return ["status" => false, "message" => "Set $key Key Data Properly"];
+            throw new DotEnvEditorException("Set $key Key Data Properly");
         }elseif($this->env_key_check($key) == true){
-            return ["status" => false, "message" => "This $key key is already exists"];
+            throw new DotEnvEditorException("This $key key is already exists");
         }
         $file = file($this->path);
         array_push($file, $key."=".$value);
@@ -96,9 +122,9 @@ class DotEnvEditor{
     
     public function remove_key($key){
         if($key == null){
-            return ['status' => false, 'message' => "Set Key Data Properly"];
+            throw new DotEnvEditorException("Set Key Data Properly");
         }elseif($this->env_key_check($key) == false){
-            return ['status' => false, 'message' => "This $key key is not found"];
+            throw new DotEnvEditorException("This $key key is not found");
         }
         $file = file($this->path);
         $newfile = [];

@@ -101,6 +101,17 @@ $value = "NEW_VALUE";
 $update_key = DotEnvEditor::update_key($key, $value);
 ```
 
+## Update multiple existing key
+```php
+$array = [
+    "APP_NAME" => "TEST_LARAVEL_APP",
+    "MAIL_USERNAME" => "TEST_MAIL_USERNAME",
+    "MAIL_PASSWORD" => "TEST_MAIL_PASSWORD",
+];
+$env = DotEnvEditor::update_multiple_key($array);
+return $env;
+```
+
 ## Remove the existing key
 ```php
 use DotEnvEditor;
