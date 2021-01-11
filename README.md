@@ -36,6 +36,7 @@ to create a class instance
 ```php
 use Munna\DotEnvEditor\DotEnvEditor;
 $env = new DotEnvEditor();
+$env->env_array();
 // Use this class as your demand.
 ```
 
