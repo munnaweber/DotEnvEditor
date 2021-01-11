@@ -1,14 +1,27 @@
 {
     "name": "munna/dot-env-editor",
     "description": "Simple package for laravel .env file modification. Now you can handle your .env variable easily.",
-    "type": "Package",
+    "type": "package",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Munna",
-            "email": "munnawb9@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Munna",
+        "email": "munnawb9@gmail.com"
+    }],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Munna\\DotEnvEditor\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Munna\\DotEnvEditor\\DotEnvEditorServiceProvider"
+            ],
+            "aliases": {
+                "DotEnvEditor": "Munna\\DotEnvEditor\\Facades\\DotEnvEditor"
+            }
+        }
+    }
 }
